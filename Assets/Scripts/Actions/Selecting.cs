@@ -14,15 +14,20 @@ namespace Assets.Scripts.Actions
         private bool isHighlightedIcon = false;
         public Vector2 PCoord { get; set; }
         private bool moveSlider = false;
+        private readonly string pointerObjectName = "Selecting Pointer";
+        private readonly Shader pointerShader = Shader.Find("Sprites/Diffuse");
+        private readonly float pointerStartWidth = 0.03f;
+        private readonly float pointerEndWidth = 0.01f;
+        private readonly string objectSelectingGameObjectName = "Object Selecting";
 
         public override void Init()
         {
-            pointer = new GameObject("Selecting Pointer");
+            pointer = new GameObject(pointerObjectName);
             pointerLineRenderer = pointer.AddComponent<LineRenderer>();
-            pointerLineRenderer.material = new Material(Shader.Find("Sprites/Diffuse"));
+            pointerLineRenderer.material = new Material(pointerShader);
             UpdatePointerColor();
-            pointerLineRenderer.startWidth = 0.03f;
-            pointerLineRenderer.endWidth = 0.01f;
+            pointerLineRenderer.startWidth = pointerStartWidth;
+            pointerLineRenderer.endWidth = pointerEndWidth;
             pointerLineRenderer.enabled = true;
         }
 
@@ -84,7 +89,8 @@ namespace Assets.Scripts.Actions
             pointerLineRenderer.SetPosition(1, multiToolTransform.position + multiToolTransform.forward * 10.0f);
 
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, 100))
+            var raycastMaxDistance = 100;
+            if (Physics.Raycast(ray, out hit, raycastMaxDistance))
             {
                 pointerLineRenderer.SetPosition(1, hit.point);
                 PCoord = hit.textureCoord;
@@ -167,7 +173,7 @@ namespace Assets.Scripts.Actions
 
         private bool isObjectSelectingIcon(MenuIcon icon)
         {
-            return icon.GetType() != typeof(ObjectSelectingMenuIcon) && icon.GetType() != typeof(SelectionScaleSlider) && icon.gameObject.name != "Object Selecting";
+            return icon.GetType() != typeof(ObjectSelectingMenuIcon) && icon.GetType() != typeof(SelectionScaleSlider) && icon.gameObject.name != objectSelectingGameObjectName;
         }
     }
 }

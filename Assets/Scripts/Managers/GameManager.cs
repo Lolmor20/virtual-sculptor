@@ -9,12 +9,19 @@ namespace Assets.Scripts.Managers
         public Color CurrentColor { get; set; } = Color.magenta;
         public Action CurrentAction { get; set; }
         public ActionsData ActionsData { get; set; }
-        public float CurrentLineThickness { get; set; } = 0.0f;
-        public float MinStrokeWidth { get; set; } = 0.01f;
-        public float MaxStrokeWidth { get; set; } = 0.5f;
-        public float MinObjectSize { get; set; } = 0.2f;
-        public float MaxObjectSize { get; set; } = 2f;
+        public float CurrentLineThickness { get; } = 0.0f;
+        public float MinStrokeWidth { get; } = 0.01f;
+        public float MaxStrokeWidth { get; } = 0.5f;
+        public float MinObjectSize { get; } = 0.2f;
+        public float MaxObjectSize { get; } = 2f;
         public string PathToSaveFile { get; set; }
+        public const string UniversalTag = "CreatedObjects";
+        public const string NonSerializableTag = "NonSerializable";
+        public const string LineName = "Line2D";
+        public const string Line3DName = "Line3D";
+        public const string Line3DCubeSegmentName = "Line3DCubeSegment";
+        public const string Line3DCylinderSegmentName = "Line3DCylinderSegment";
+        public const string PrimitiveObjectName = "PrimitiveObject";
 
         void Awake()
         {

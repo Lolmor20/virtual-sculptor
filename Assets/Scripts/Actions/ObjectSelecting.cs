@@ -13,6 +13,9 @@ namespace Assets.Scripts.Actions
         private GameObject[] gameObjects;
         private SelectionState CurrentState = SelectionState.STANDBY;
         private SelectionState ToolState = SelectionState.SELECTING;
+        private static readonly Shader oldLineShader = Shader.Find("Particles/Additive");
+        private static readonly Color transparencyDifference = new Color(0f, 0f, 0f, 0.7f);         // to differentiate selected 2d lines
+        private static readonly Color colorDifference = new Color(0f, 0f, 5f);                      // to differentiate selected 3d lines and objects
 
         private enum SelectionState
         {
@@ -44,7 +47,7 @@ namespace Assets.Scripts.Actions
             {
                 case SelectionState.SELECTING: // select objects
                     CurrentState = SelectionState.SELECTING;
-                    gameObjects = GameObject.FindGameObjectsWithTag(GlobalVars.UniversalTag);
+                    gameObjects = GameObject.FindGameObjectsWithTag(GameManager.UniversalTag);
                     break;
                 case SelectionState.COPYING: // copy selected objects relative to flystick position
                     CopySelection();
@@ -153,8 +156,8 @@ namespace Assets.Scripts.Actions
                 {
                     newObj = new GameObject
                     {
-                        name = GlobalVars.LineName,
-                        tag = GlobalVars.UniversalTag
+                        name = GameManager.LineName,
+                        tag = GameManager.UniversalTag
                     };
 
                     newObj.transform.position = oldObj.transform.position;
@@ -173,7 +176,7 @@ namespace Assets.Scripts.Actions
 
                     newLineRenderer.useWorldSpace = false;
                     newLineRenderer.material = oldLineRenderer.material;
-                    oldLineRenderer.material = new Material(Shader.Find("Particles/Additive"));
+                    oldLineRenderer.material = new Material(oldLineShader);
                     newLineRenderer.startColor = oldLineRenderer.startColor;
                     newLineRenderer.endColor = oldLineRenderer.endColor;
                     newLineRenderer.startWidth = oldLineRenderer.startWidth;
@@ -255,18 +258,18 @@ namespace Assets.Scripts.Actions
         {
             if (obj.GetComponent<LineRenderer>() != null)
             {
-                obj.GetComponent<LineRenderer>().startColor += new Color(0f, 0f, 0f, 0.7f);
-                obj.GetComponent<LineRenderer>().endColor += new Color(0f, 0f, 0f, 0.7f);
+                obj.GetComponent<LineRenderer>().startColor += transparencyDifference;
+                obj.GetComponent<LineRenderer>().endColor += transparencyDifference;
             }
             else if (obj.GetComponent<Renderer>() != null)
             {
-                obj.GetComponent<Renderer>().material.color -= new Color(0f, 0f, 5f, 0f);
+                obj.GetComponent<Renderer>().material.color -= colorDifference;
             }
             else
             {
                 foreach (Transform child in obj.transform)
                 {
-                    child.gameObject.GetComponent<Renderer>().material.color -= new Color(0f, 0f, 5f, 0f);
+                    child.gameObject.GetComponent<Renderer>().material.color -= colorDifference;
                 }
             }
         }
@@ -275,18 +278,18 @@ namespace Assets.Scripts.Actions
         {
             if (obj.GetComponent<LineRenderer>() != null)
             {
-                obj.GetComponent<LineRenderer>().startColor -= new Color(0f, 0f, 0f, 0.7f);
-                obj.GetComponent<LineRenderer>().endColor -= new Color(0f, 0f, 0f, 0.7f);
+                obj.GetComponent<LineRenderer>().startColor -= transparencyDifference;
+                obj.GetComponent<LineRenderer>().endColor -= transparencyDifference;
             }
             else if (obj.GetComponent<Renderer>() != null)
             {
-                obj.GetComponent<Renderer>().material.color += new Color(0f, 0f, 5f, 0f);
+                obj.GetComponent<Renderer>().material.color += colorDifference;
             }
             else
             {
                 foreach (Transform child in obj.transform)
                 {
-                    child.gameObject.GetComponent<Renderer>().material.color += new Color(0f, 0f, 5f, 0f);
+                    child.gameObject.GetComponent<Renderer>().material.color += colorDifference;
                 }
             }
         }

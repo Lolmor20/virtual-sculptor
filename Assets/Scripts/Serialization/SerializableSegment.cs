@@ -21,11 +21,11 @@ namespace Assets.Scripts.Serialization
         public override GameObject Deserialize()
         {
             GameObject newSegment;
-            if (this.name == GlobalVars.Line3DCylinderSegmentName)
+            if (this.name == GameManager.Line3DCylinderSegmentName)
             {
                 newSegment = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
             }
-            else if (this.name == GlobalVars.Line3DCubeSegmentName)
+            else if (this.name == GameManager.Line3DCubeSegmentName)
             {
                 newSegment = GameObject.CreatePrimitive(PrimitiveType.Cube);
             }

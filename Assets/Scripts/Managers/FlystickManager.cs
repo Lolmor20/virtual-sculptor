@@ -9,7 +9,6 @@ namespace Assets.Scripts.Managers
         public GameObject Flystick;
         public GameObject MultiTool;
 
-        // przykladowe
         void HandleInput(string input)
         {
             switch (input)
@@ -32,27 +31,27 @@ namespace Assets.Scripts.Managers
         {
             string input = "";
             //for monoscopic mode
-            if (Input.GetButtonDown("Trigger"))
+            if (Input.GetButtonDown(Button.TRIGGER))
             {
                 input = "trigger_down";
             }
 
-            if (Input.GetButtonUp("Trigger"))
+            if (Input.GetButtonUp(Button.TRIGGER))
             {
                 input = "trigger_up";
             }
 
-            if (Input.GetButtonDown("Redo Button"))
+            if (Input.GetButtonDown(Button.REDO))
             {
                 input = "button1";
             }
 
-            if (Input.GetButtonDown("Undo Button"))
+            if (Input.GetButtonDown(Button.UNDO))
             {
                 input = "button2";
             }
 
-            if (Input.GetButtonDown("Selecting Mode Button"))
+            if (Input.GetButtonDown(Button.SELECTING_MODE))
             {
                 input = "button3";
             }

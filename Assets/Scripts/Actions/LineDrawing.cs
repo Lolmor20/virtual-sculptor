@@ -75,12 +75,12 @@ namespace Assets.Scripts.Actions
                     if (type == LineType.Cylinder)
                     {
                         newSegment = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
-                        newSegment.name = GlobalVars.Line3DCylinderSegmentName;
+                        newSegment.name = GameManager.Line3DCylinderSegmentName;
                     }
                     else if (type == LineType.Cube)
                     {
                         newSegment = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                        newSegment.name = GlobalVars.Line3DCubeSegmentName;
+                        newSegment.name = GameManager.Line3DCubeSegmentName;
 
                     }
                     else
@@ -88,7 +88,7 @@ namespace Assets.Scripts.Actions
                         Debug.LogError("Line type not implemented: " + type.ToString());
                         return;
                     }
-                    newSegment.tag = GlobalVars.UniversalTag;
+                    newSegment.tag = GameManager.UniversalTag;
                     newSegment.transform.parent = line.transform;
                     newSegment.GetComponent<Renderer>().material.color = GameManager.Instance.CurrentColor;
                     newSegment.transform.position = Vector3.Lerp(lastPosition, tool.transform.position, 0.5f);
@@ -118,20 +118,20 @@ namespace Assets.Scripts.Actions
         {
             GameObject gameObject = new GameObject
             {
-                tag = GlobalVars.UniversalTag
+                tag = GameManager.UniversalTag
             };
             gameObject.transform.position = tool.transform.position;
 
             if (type == LineType.LineRenderer)
             {
-                gameObject.name = GlobalVars.LineName;
+                gameObject.name = GameManager.LineName;
                 lineRenderer = gameObject.AddComponent<LineRenderer>();
                 lineRenderer.numCapVertices = 1;
                 lineRenderer.numCornerVertices = 5;
                 lineRenderer.positionCount = 0;
                 lineRenderer.useWorldSpace = false;
 
-                lineRenderer.material = new Material(Shader.Find("Particles/Additive"));    // todo add shader selection
+                lineRenderer.material = new Material(Shader.Find("Particles/Additive"));
                 lineRenderer.startColor = GameManager.Instance.CurrentColor;
                 lineRenderer.endColor = GameManager.Instance.CurrentColor;
                 lineRenderer.startWidth = StrokeWidth;
@@ -139,7 +139,7 @@ namespace Assets.Scripts.Actions
             }
             else
             {
-                gameObject.name = GlobalVars.Line3DName;
+                gameObject.name = GameManager.Line3DName;
                 gameObject.AddComponent<Rigidbody>();
                 gameObject.GetComponent<Rigidbody>().isKinematic = true;
             }

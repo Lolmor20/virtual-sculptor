@@ -12,7 +12,7 @@ namespace Assets.Scripts.Actions
         public override void HandleTriggerDown()
         {
             erasing = true;
-            gameObjects = GameObject.FindGameObjectsWithTag(GlobalVars.UniversalTag);
+            gameObjects = GameObject.FindGameObjectsWithTag(GameManager.UniversalTag);
         }
 
         public override void HandleTriggerUp()
