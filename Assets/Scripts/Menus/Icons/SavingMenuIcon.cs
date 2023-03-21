@@ -25,7 +25,7 @@ namespace Assets.Scripts.Menus.Icons
         private void save()
         {
             // Get all objects created by user
-            GameObject[] objectList = GameObject.FindGameObjectsWithTag(GameManager.UniversalTag);
+            GameObject[] objectList = GameObject.FindGameObjectsWithTag(Constants.UniversalTag);
             if (objectList.Length != 0)
             {
                 // Parse the objects into serializable versions
@@ -34,17 +34,17 @@ namespace Assets.Scripts.Menus.Icons
                 {
                     switch (item.name)
                     {
-                        case GameManager.LineName:
+                        case Constants.LineName:
                             serializableArray.lines.Add(new SerializableLine(item));
                             break;
-                        case GameManager.Line3DName:
+                        case Constants.Line3DName:
                             serializableArray.lines3d.Add(new SerializableLine3D(item));
                             break;
-                        case GameManager.Line3DCubeSegmentName:
-                        case GameManager.Line3DCylinderSegmentName:
+                        case Constants.Line3DCubeSegmentName:
+                        case Constants.Line3DCylinderSegmentName:
                             break; // ignore these, they're handled by Line3DName
                         default:
-                            if (item.name.Contains(GameManager.PrimitiveObjectName))
+                            if (item.name.Contains(Constants.PrimitiveObjectName))
                             {
                                 serializableArray.primitives.Add(new SerializablePrimitive(item));
                             }

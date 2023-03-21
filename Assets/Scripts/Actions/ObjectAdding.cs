@@ -29,8 +29,8 @@ namespace Assets.Scripts.Actions
         public override void HandleTriggerDown()
         {
             newObject = GameObject.CreatePrimitive(type);
-            newObject.name = GameManager.PrimitiveObjectName + type.ToString();
-            newObject.tag = GameManager.UniversalTag;
+            newObject.name = Constants.PrimitiveObjectName + type.ToString();
+            newObject.tag = Constants.UniversalTag;
             newObject.GetComponent<Renderer>().material.color = GameManager.Instance.CurrentColor;
             newObject.transform.localScale = (new Vector3(objectSize, objectSize, objectSize));
             newObject.transform.position = tool.transform.position + tool.transform.forward * transformationScale;

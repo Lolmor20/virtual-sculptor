@@ -15,13 +15,7 @@ namespace Assets.Scripts.Managers
         public float MinObjectSize { get; } = 0.2f;
         public float MaxObjectSize { get; } = 2f;
         public string PathToSaveFile { get; set; }
-        public const string UniversalTag = "CreatedObjects";
-        public const string NonSerializableTag = "NonSerializable";
-        public const string LineName = "Line2D";
-        public const string Line3DName = "Line3D";
-        public const string Line3DCubeSegmentName = "Line3DCubeSegment";
-        public const string Line3DCylinderSegmentName = "Line3DCylinderSegment";
-        public const string PrimitiveObjectName = "PrimitiveObject";
+ 
 
         void Awake()
         {

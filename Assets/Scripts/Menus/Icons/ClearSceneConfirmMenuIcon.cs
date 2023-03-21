@@ -17,7 +17,7 @@ namespace Assets.Scripts.Menus.Icons
 
         private void clearScene()
         {
-            GameObject[] objectList = GameObject.FindGameObjectsWithTag(GameManager.UniversalTag);
+            GameObject[] objectList = GameObject.FindGameObjectsWithTag(Constants.UniversalTag);
             Debug.Log("Destroying " + objectList.Length + " objects.");
             foreach (var item in objectList)
             {

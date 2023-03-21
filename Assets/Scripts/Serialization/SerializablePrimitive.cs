@@ -23,7 +23,7 @@ namespace Assets.Scripts.Serialization
         public override GameObject Deserialize()
         {
             GameObject primitive;
-            switch (this.name.Replace(GameManager.PrimitiveObjectName, ""))
+            switch (this.name.Replace(Constants.PrimitiveObjectName, ""))
             {
                 case "Sphere":
                     primitive = GameObject.CreatePrimitive(PrimitiveType.Sphere);

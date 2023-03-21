@@ -47,7 +47,7 @@ namespace Assets.Scripts.Actions
             {
                 case SelectionState.SELECTING: // select objects
                     CurrentState = SelectionState.SELECTING;
-                    gameObjects = GameObject.FindGameObjectsWithTag(GameManager.UniversalTag);
+                    gameObjects = GameObject.FindGameObjectsWithTag(Constants.UniversalTag);
                     break;
                 case SelectionState.COPYING: // copy selected objects relative to flystick position
                     CopySelection();
@@ -156,8 +156,8 @@ namespace Assets.Scripts.Actions
                 {
                     newObj = new GameObject
                     {
-                        name = GameManager.LineName,
-                        tag = GameManager.UniversalTag
+                        name = Constants.LineName,
+                        tag = Constants.UniversalTag
                     };
 
                     newObj.transform.position = oldObj.transform.position;

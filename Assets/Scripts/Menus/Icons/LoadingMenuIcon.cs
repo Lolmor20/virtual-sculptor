@@ -39,17 +39,17 @@ namespace Assets.Scripts.Menus.Icons
 
             var serializableArray = JsonUtility.FromJson<SerializableObjectArrayWrapper>(toDeserialize);
             Debug.Log("Deserializing and recreating objects:");
-            Debug.Log("    " + serializableArray.lines.Count + " [" + GameManager.LineName + "]");
+            Debug.Log("    " + serializableArray.lines.Count + " [" + Constants.LineName + "]");
             foreach (var serializableLine in serializableArray.lines)
             {
                 serializableLine.Deserialize();
             }
-            Debug.Log("    " + serializableArray.lines3d.Count + " [" + GameManager.Line3DName + "]");
+            Debug.Log("    " + serializableArray.lines3d.Count + " [" + Constants.Line3DName + "]");
             foreach (var serializableLine3D in serializableArray.lines3d)
             {
                 serializableLine3D.Deserialize();
             }
-            Debug.Log("    " + serializableArray.primitives.Count + " [" + GameManager.PrimitiveObjectName + "]");
+            Debug.Log("    " + serializableArray.primitives.Count + " [" + Constants.PrimitiveObjectName + "]");
             foreach (var primitive in serializableArray.primitives)
             {
                 primitive.Deserialize();

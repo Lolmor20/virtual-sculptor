@@ -75,12 +75,12 @@ namespace Assets.Scripts.Actions
                     if (type == LineType.Cylinder)
                     {
                         newSegment = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
-                        newSegment.name = GameManager.Line3DCylinderSegmentName;
+                        newSegment.name = Constants.Line3DCylinderSegmentName;
                     }
                     else if (type == LineType.Cube)
                     {
                         newSegment = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                        newSegment.name = GameManager.Line3DCubeSegmentName;
+                        newSegment.name = Constants.Line3DCubeSegmentName;
 
                     }
                     else
@@ -88,7 +88,7 @@ namespace Assets.Scripts.Actions
                         Debug.LogError("Line type not implemented: " + type.ToString());
                         return;
                     }
-                    newSegment.tag = GameManager.UniversalTag;
+                    newSegment.tag = Constants.UniversalTag;
                     newSegment.transform.parent = line.transform;
                     newSegment.GetComponent<Renderer>().material.color = GameManager.Instance.CurrentColor;
                     newSegment.transform.position = Vector3.Lerp(lastPosition, tool.transform.position, 0.5f);
@@ -118,13 +118,13 @@ namespace Assets.Scripts.Actions
         {
             GameObject gameObject = new GameObject
             {
-                tag = GameManager.UniversalTag
+                tag = Constants.UniversalTag
             };
             gameObject.transform.position = tool.transform.position;
 
             if (type == LineType.LineRenderer)
             {
-                gameObject.name = GameManager.LineName;
+                gameObject.name = Constants.LineName;
                 lineRenderer = gameObject.AddComponent<LineRenderer>();
                 lineRenderer.numCapVertices = 1;
                 lineRenderer.numCornerVertices = 5;
@@ -139,7 +139,7 @@ namespace Assets.Scripts.Actions
             }
             else
             {
-                gameObject.name = GameManager.Line3DName;
+                gameObject.name = Constants.Line3DName;
                 gameObject.AddComponent<Rigidbody>();
                 gameObject.GetComponent<Rigidbody>().isKinematic = true;
             }
