@@ -11,7 +11,6 @@ namespace Assets.Scripts.Managers
         public GameObject MultiTool;
         public GameObject DrawingTool;
 
-        // przykladowe
         void HandleInput(string input)
         {
             switch (input)
@@ -75,7 +74,6 @@ namespace Assets.Scripts.Managers
             {
                 toolsMenu.PreviouslySelectedIcon = toolsMenu.selectingIcon;
             }
-            Debug.Log(GetType().Name + ": deselecting " + toolsMenu.SelectedIcon.gameObject.name + " selecting " + toolsMenu.PreviouslySelectedIcon.gameObject.name);
             var tmp = toolsMenu.PreviouslySelectedIcon;
             toolsMenu.SelectedIcon.Deselect();
             tmp.Select();
