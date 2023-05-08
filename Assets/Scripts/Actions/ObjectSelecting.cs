@@ -151,6 +151,9 @@ namespace Assets.Scripts.Actions
                 GameObject newObj;
                 newObj = Object.Instantiate(oldObj);
                 newObj.name = oldObj.name;
+                var renderer = newObj.GetComponent<MeshRenderer>();
+                renderer.material = new Material(Shader.Find("Sprites/Diffuse"));
+                renderer.material.color = oldObj.GetComponent<MeshRenderer>().material.color;
                 toBeCopied.Add(newObj);
             }
             DeselectAll();
@@ -207,7 +210,7 @@ namespace Assets.Scripts.Actions
 
         private void changeColorToSelected(GameObject obj)
         {
-            obj.GetComponent<Renderer>().material.color += new Color(0f, 0f, 0f, 0.5f);
+            obj.GetComponent<Renderer>().material.color += new Color(0f, 0f, 0f, 0.75f);
         }
     }
 }
