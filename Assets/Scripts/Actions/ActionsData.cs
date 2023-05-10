@@ -8,5 +8,6 @@
         public ObjectSelecting ObjectSelecting { get; } = new ObjectSelecting();
         public ObjectAdding ObjectAdding { get; } = new ObjectAdding();
         public CreateShapes CreateShapes { get; } = new CreateShapes();
+        public Sculpting Sculpting { get; } = new Sculpting();
     }
 }

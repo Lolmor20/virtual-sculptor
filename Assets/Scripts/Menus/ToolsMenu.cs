@@ -17,6 +17,7 @@ namespace Assets.Scripts.Menus
         public MenuIcon objestAddingIcon { get; set; } = new ToolsMenuIcon(GameObject.Find("Object Adding"), GameManager.Instance.ActionsData.ObjectAdding, MenuManager.Instance.ParametersMenusData.ObjectAddingParametersMenu);
         public MenuIcon skyboxSelectingIcon { get; set; } = new ToolsMenuIcon(GameObject.Find("Skybox Selecting"), GameManager.Instance.ActionsData.Selecting, MenuManager.Instance.ParametersMenusData.SkyboxSelectingParametersMenu);
         public MenuIcon createShapesIcon { get; set; } = new IconWithoutParametersMenu(GameObject.Find("Create Shapes"), GameManager.Instance.ActionsData.CreateShapes);
+        public MenuIcon sculptingIcon { get; set; } = new ToolsMenuIcon(GameObject.Find("Sculpting"), GameManager.Instance.ActionsData.Sculpting, MenuManager.Instance.ParametersMenusData.SkyboxSelectingParametersMenu);
 
         public ToolsMenu()
         {
@@ -30,7 +31,8 @@ namespace Assets.Scripts.Menus
                 clearSceneIcon,
                 objestAddingIcon,
                 skyboxSelectingIcon,
-                createShapesIcon
+                createShapesIcon,
+                sculptingIcon
             };
         }
     }

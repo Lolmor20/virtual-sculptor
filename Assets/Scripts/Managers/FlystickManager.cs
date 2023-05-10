@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts.Menus;
-using Assets.Scripts.Actions;
 using UnityEngine;
 
 namespace Assets.Scripts.Managers
