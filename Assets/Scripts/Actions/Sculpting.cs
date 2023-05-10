@@ -13,7 +13,7 @@ namespace Assets.Scripts.Actions
         private GameObject[] gameObjects;
         private bool sculpting = false;
 
-        private enum BooleanOperation
+        public enum BooleanOperation
         {
             UNION,
             INTERSECT,
@@ -45,15 +45,34 @@ namespace Assets.Scripts.Actions
                 {
                     try
                     {
-                        Model result = CSG.Subtract(obj, multiTool);
-                        obj.GetComponent<MeshFilter>().mesh = result.mesh;
-                        
-                        obj.GetComponent<MeshCollider>().sharedMesh = result.mesh;
+                        Model result = performBooleanOperation(obj);
+
+                        //obj.GetComponent<MeshFilter>().mesh = result.mesh;
+                        //obj.GetComponent<MeshCollider>().sharedMesh = result.mesh;
+
+                        var composite = new GameObject();
+                        composite.AddComponent<MeshFilter>().sharedMesh = result.mesh;
+                        composite.AddComponent<MeshRenderer>().sharedMaterials = result.materials.ToArray();
                     } catch (Exception e)
                     {
                         Debug.Log(e);
                     }
                 }
+            }
+        }
+
+        private Model performBooleanOperation(GameObject obj)
+        {
+            switch (currentOperation)
+            {
+                case BooleanOperation.UNION:
+                    return CSG.Union(obj, multiTool);
+                case BooleanOperation.SUBTRACT:
+                    return CSG.Subtract(obj, multiTool);
+                case BooleanOperation.INTERSECT:
+                    return CSG.Intersect(obj, multiTool);
+                default:
+                    return CSG.Subtract(obj, multiTool);
             }
         }
 
@@ -64,6 +83,11 @@ namespace Assets.Scripts.Actions
 
         public override void Finish()
         {
+        }
+
+        public void SetCurrentOperation(BooleanOperation operation)
+        {
+            this.currentOperation = operation;
         }
     }
 }
