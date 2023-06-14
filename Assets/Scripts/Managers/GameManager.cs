@@ -16,11 +16,14 @@ namespace Assets.Scripts.Managers
         public float MaxObjectSize { get; set; } = 2f;
         public string PathToSaveFile { get; set; }
         public float LineSize { get; set; } = 0.5f;
+        public Material LineMaterial { get; set; }
 
         void Awake()
         {
             Instance = this;
             PathToSaveFile = Application.persistentDataPath + "/save.json";
+            LineMaterial = new Material(Shader.Find("Standard"));
+            //LineMaterial = Resources.Load<Material>("Materials/ComicMat");
         }
 
         void Start()
@@ -28,7 +31,7 @@ namespace Assets.Scripts.Managers
             ActionsData = new ActionsData();
             CurrentAction = ActionsData.Selecting;
             CurrentAction.Init();
-            ActionsData.LineDrawing.SetLineType(LineDrawing.LineType.Circle);
+            ActionsData.LineDrawing.InstantiateDrawingTool();
         }
 
         public void changeCurrentAction(Action action)

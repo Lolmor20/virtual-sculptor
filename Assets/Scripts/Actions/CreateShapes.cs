@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 using Assets.Scripts.Managers;
 
 namespace Assets.Scripts.Actions
@@ -15,21 +16,82 @@ namespace Assets.Scripts.Actions
             mesh.vertices.CopyTo(newVertices, 0);
             newVertices[mesh.vertexCount] = newVertex;
             mesh.vertices = newVertices;
+
             if (newVertices.Length >= 3)
             {
                 var oldTriangles = mesh.triangles;
-                int[] newTriangles = new int[3 * (mesh.vertexCount - 2)];
-                for(int i = 0; i < mesh.vertexCount - 2; i++)
+                List<int> newTriangles = new List<int>();
+
+                int v1 = mesh.vertexCount - 1;
+                for (int i = 0; i < mesh.vertexCount - 1; i++)
                 {
-                    newTriangles[3 * i] = mesh.vertexCount - 1;
-                    newTriangles[3 * i + 1] = i;
-                    newTriangles[3 * i + 2] = i + 1;
+                    int v2 = i;
+                    for (int j = i + 1; j < mesh.vertexCount - 1; j++)
+                    {
+                        int v3 = j;
+
+                        newTriangles.Add(v1);
+                        newTriangles.Add(v2);
+                        newTriangles.Add(v3);
+
+                        newTriangles.Add(v3);
+                        newTriangles.Add(v2);
+                        newTriangles.Add(v1);
+                    }
                 }
-                int[] allTriangles = new int[oldTriangles.Length + newTriangles.Length];
+
+                int[] allTriangles = new int[oldTriangles.Length + newTriangles.Count];
                 oldTriangles.CopyTo(allTriangles, 0);
                 newTriangles.CopyTo(allTriangles, oldTriangles.Length);
                 mesh.triangles = allTriangles;
+                mesh.RecalculateNormals();
+
+                createdObject.GetComponent<MeshCollider>().sharedMesh = mesh;
+
+                for (int i = 0; i < newTriangles.Count; i += 3)
+                {
+                    if (isTriangleInsideMesh(newVertices[newTriangles[i]], newVertices[newTriangles[i + 1]], newVertices[newTriangles[i + 2]]))
+                    {
+                        int a = 2;
+                    }
+                }
             }
+        }
+
+        private bool isTriangleInsideMesh(Vector3 v1, Vector3 v2, Vector3 v3)
+        {
+            var meshCollider = createdObject.GetComponent<MeshCollider>();
+            var triangleNormal = Vector3.Cross(v2 - v1, v3 - v1);
+
+            var centrePoint = (v1 + v2 + v3) / 3;
+
+            Vector3 direction = triangleNormal;
+            Ray ray = new Ray(centrePoint, centrePoint + direction);
+            Debug.DrawLine(centrePoint, centrePoint + direction);
+            RaycastHit hit;
+
+            var raycastResult = Physics.Raycast(ray, out hit);
+
+            if (!raycastResult)
+            {
+                return false;
+            } else if (hit.collider != meshCollider)
+            {
+                return false;
+            }
+
+            ray = new Ray(centrePoint, centrePoint - direction);
+            Debug.DrawLine(centrePoint, centrePoint - direction);
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                return false;
+            } else if (hit.collider != meshCollider)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         public override void HandleTriggerUp()
@@ -47,7 +109,6 @@ namespace Assets.Scripts.Actions
 
         public override void Finish()
         {
-            createdObject.AddComponent<MeshCollider>().sharedMesh = createdObject.GetComponent<MeshFilter>().mesh;
         }
 
         private GameObject instantiateObject()
@@ -55,9 +116,10 @@ namespace Assets.Scripts.Actions
             GameObject newObject = new GameObject(GlobalVars.LineName);
             newObject.tag = GlobalVars.UniversalTag;
             var renderer = newObject.AddComponent<MeshRenderer>();
-            renderer.material = new Material(Shader.Find("Sprites/Diffuse"));
             renderer.material.color = GameManager.Instance.CurrentColor;
             newObject.AddComponent<MeshFilter>();
+            newObject.AddComponent<MeshCollider>();
+          //  newObject.AddComponent<LineRenderer>();
 
             return newObject;
         }
