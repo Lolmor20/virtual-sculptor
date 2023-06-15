@@ -22,7 +22,7 @@ namespace Assets.Scripts.Actions
 
         public override void Init()
         {
-            // Nothing
+            drawingTool.SetActive(true);
         }
 
         public override void HandleTriggerDown()
@@ -41,7 +41,7 @@ namespace Assets.Scripts.Actions
 
         public override void Finish()
         {
-            // Nothing happens
+            drawingTool.SetActive(false);
         }
 
         public override void Update()
@@ -87,7 +87,7 @@ namespace Assets.Scripts.Actions
             GameObject newLine = new GameObject(GlobalVars.LineName);
             newLine.tag = GlobalVars.UniversalTag;
             var renderer = newLine.AddComponent<MeshRenderer>();
-            renderer.material = new Material(Shader.Find("Sprites/Diffuse"));
+          //  renderer.material = new Material(GameManager.Instance.LineMaterial);
             renderer.material.color = GameManager.Instance.CurrentColor;
             newLine.AddComponent<MeshFilter>();
 
@@ -161,6 +161,7 @@ namespace Assets.Scripts.Actions
             newSegmentTriangles.CopyTo(newTriangles, oldTriangles.Length);
 
             mesh.triangles = newTriangles;
+            mesh.RecalculateNormals();
 
             line.AddComponent<MeshCollider>().sharedMesh = mesh;
         }
@@ -210,11 +211,18 @@ namespace Assets.Scripts.Actions
             drawingToolMesh.Clear();
             drawingToolMesh.vertices = vertices;
             drawingToolMesh.triangles = DrawingUtils.MeshTrianglesFromVertices(vertices);
+            drawingToolMesh.RecalculateNormals();
         }
 
         public void UpdateDrawingToolSize()
         {
-            drawingTool.transform.localScale = new Vector3(GameManager.Instance.LineSize, GameManager.Instance.LineSize);
+            drawingTool.transform.localScale = new Vector3(GameManager.Instance.LineSize, GameManager.Instance.LineSize, drawingTool.transform.localScale.z);
+        }
+
+        public void InstantiateDrawingTool()
+        {
+            SetLineType(LineType.Circle);
+            drawingTool.GetComponent<MeshRenderer>().material.color = Color.white;
         }
     }
 }
