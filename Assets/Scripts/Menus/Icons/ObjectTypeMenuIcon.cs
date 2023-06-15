@@ -6,9 +6,9 @@ namespace Assets.Scripts.Menus.Icons
 {
     public class ObjectTypeMenuIcon : MenuIcon
     {
-        private PrimitiveType objectType;
+        private Actions.ObjectAdding.ObjectType objectType;
 
-        public ObjectTypeMenuIcon(GameObject icon, Action action, PrimitiveType objectType) : base(icon, action)
+        public ObjectTypeMenuIcon(GameObject icon, Action action, ObjectAdding.ObjectType objectType) : base(icon, action)
         {
             this.objectType = objectType;
         }
