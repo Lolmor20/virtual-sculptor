@@ -13,7 +13,9 @@ namespace Assets.Scripts.Actions
 			Cylinder, 
 			Triangle,
 			Square, 
-			Pyramid
+			Pyramid, 
+			Cone, 
+			Wedge
 		}
 
 
@@ -148,6 +150,70 @@ namespace Assets.Scripts.Actions
 					4, 2, 3,
 					4, 3, 0
 				};
+
+				break;
+
+			case ObjectType.Wedge:
+				gameObject.name = "Wedge";
+
+				vertices = new Vector3[6] {
+					new Vector3 (0, 0, 0),
+					new Vector3 (2, 0, 0), 
+					new Vector3 (1, 0, 2),
+					new Vector3 (0, 3, 0),
+					new Vector3 (2, 3, 0), 
+					new Vector3 (1, 3, 2),
+				};
+
+				triangles = new int[8 * 3] {
+					0, 1, 2,
+					5, 4, 3,
+					0, 4, 1, 
+					3, 4, 0, 
+					5, 2, 1, 
+					1, 4, 5, 
+					3, 0, 2,
+					2, 5, 3
+				};
+
+				break;
+
+			case ObjectType.Cone:
+
+				gameObject.name = "Cone";
+
+				int subdivisions = 20;
+				int radius = 1;
+				int height = 3;
+
+				vertices = new Vector3[subdivisions + 2];
+
+				triangles = new int[(subdivisions * 2) * 3];
+
+				vertices [0] = Vector3.zero;
+				for (int i = 0, n = subdivisions - 1; i < subdivisions; i++) {
+					float ratio = (float)i / n;
+					float r = ratio * (Mathf.PI * 2f);
+					float x = Mathf.Cos (r) * radius;
+					float z = Mathf.Sin (r) * radius;
+					vertices [i + 1] = new Vector3 (x, 0f, z);
+				}
+				vertices [subdivisions + 1] = new Vector3 (0f, height, 0f);
+
+				for (int i = 0, n = subdivisions - 1; i < n; i++) {
+					int offset = i * 3;
+					triangles [offset] = 0; 
+					triangles [offset + 1] = i + 1; 
+					triangles [offset + 2] = i + 2; 
+				}
+
+				int bottomOffset = subdivisions * 3;
+				for (int i = 0, n = subdivisions - 1; i < n; i++) {
+					int offset = i * 3 + bottomOffset;
+					triangles [offset] = i + 1; 
+					triangles [offset + 1] = subdivisions + 1; 
+					triangles [offset + 2] = i + 2; 
+				}
 
 				break;
 

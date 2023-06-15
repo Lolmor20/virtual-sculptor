@@ -15,11 +15,13 @@ namespace Assets.Scripts.Menus
 		private readonly ObjectTypeMenuIcon squareIcon = new ObjectTypeMenuIcon(GameObject.Find("Square Icon"), GameManager.Instance.ActionsData.Selecting, Actions.ObjectAdding.ObjectType.Square);
 		private readonly ObjectTypeMenuIcon triangleIcon = new ObjectTypeMenuIcon(GameObject.Find("Triangle Icon"), GameManager.Instance.ActionsData.Selecting, Actions.ObjectAdding.ObjectType.Triangle);
 		private readonly ObjectTypeMenuIcon pyramidIcon = new ObjectTypeMenuIcon(GameObject.Find("Pyramid Icon"), GameManager.Instance.ActionsData.Selecting, Actions.ObjectAdding.ObjectType.Pyramid);
+		private readonly ObjectTypeMenuIcon coneIcon = new ObjectTypeMenuIcon(GameObject.Find("Cone Icon"), GameManager.Instance.ActionsData.Selecting, Actions.ObjectAdding.ObjectType.Cone);
+		private readonly ObjectTypeMenuIcon wedgeIcon = new ObjectTypeMenuIcon(GameObject.Find("Wedge Icon"), GameManager.Instance.ActionsData.Selecting, Actions.ObjectAdding.ObjectType.Wedge);
 
 
         public ObjectAddingParametersMenu(GameObject gameObject) : base(gameObject)
         {
-			icons = new List<MenuIcon> { objectSizeSlider, sphereIcon, cylinderIcon, cubeIcon, capsuleIcon, squareIcon, triangleIcon, pyramidIcon };
+			icons = new List<MenuIcon> { objectSizeSlider, sphereIcon, cylinderIcon, cubeIcon, capsuleIcon, squareIcon, triangleIcon, pyramidIcon, coneIcon, wedgeIcon };
         }
 
     }
